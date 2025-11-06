@@ -2,7 +2,7 @@ import random
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
@@ -71,40 +71,35 @@ def main():
         "model__alpha": [0.01, 0.1, 1.0, 10.0, 100.0] #notice model__aplha follows sklearn Pipeline syntax
     }
 
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=SEED)
+    cv = KFold(n_splits=5, shuffle=True, random_state=SEED)
 
     grid_search = GridSearchCV(
         pipeline,
         param_grid=param_grid,
         scoring="neg_root_mean_squared_error",
-        cv=3,
+        cv=cv,
         n_jobs=-1
     )
 
-    grid_search.fit(X_train, y_train)
+    grid_search.fit(X, y)
 
     print(f"Best alpha: {grid_search.best_params_['model__alpha']}")
     print(f"Best CV RMSE: {-grid_search.best_score_:.4f}")
 
-    # Evaluate on validation set
+    # Retrain best model on full dataset
     best_model = grid_search.best_estimator_
-    y_pred_val = best_model.predict(X_val)
-    rmse = np.sqrt(mean_squared_error(y_val, y_pred_val))
-    print(f"Validation RMSE: {rmse:.4f}")
-
-    #Retrain best model on full dataset
     best_model.fit(X, y)
 
-    #Predict on test set
+    # Predict on test set
     preds = best_model.predict(test)
 
-    #Save submission
+    # Save submission
     submission = pd.DataFrame({
         "index": np.arange(len(preds)),
         "value": preds
     })
     submission.to_csv("submission.csv", index=False)
-    print("ubmission.csv generated successfully!")
+    print("submission.csv generated successfully!")
 
 if __name__ == "__main__":
     main()
