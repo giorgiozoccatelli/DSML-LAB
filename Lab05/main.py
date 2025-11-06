@@ -68,7 +68,7 @@ def main():
 
     #Grid search for hyperparameter tuning
     param_grid = {
-        "model__alpha": [0.01, 0.1, 1.0, 10.0, 100.0] #notice model__aplha follows sklearn Pipeline syntax
+        "model__alpha": [5.0, 10.0, 15.0, 20.0, 25.0] #notice model__aplha follows sklearn Pipeline syntax
     }
 
     cv = KFold(n_splits=5, shuffle=True, random_state=SEED)
