@@ -2,7 +2,7 @@ import random
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
@@ -19,21 +19,21 @@ def main():
     torch.manual_seed(SEED)
     torch.cuda.manual_seed_all(SEED)
 
-    # === 1. Load datasets ===
+    #Load datasets
     train = pd.read_csv("train_dataset.csv")
     test = pd.read_csv("test_dataset.csv")
-
-    # === 2. Separate features and target ===
+    
+    #Separate features and target
     target_col = "target"
     X = train.drop(columns=[target_col])
     y = train[target_col]
 
-    # === 3. Identify feature groups ===
+    #Identify feature groups
     cont_cols = [c for c in X.columns if c.startswith("cont_")]
     ord_cols  = [c for c in X.columns if c.startswith("ord_")]
     cat_cols  = [c for c in X.columns if c.startswith("cat_")]
 
-    # === 4. Preprocessing pipelines ===
+    #Preprocessing pipelines 
     numeric_transformer = Pipeline(steps=[
         ("imputer", SimpleImputer(strategy="mean")),
         ("scaler", StandardScaler())
@@ -49,7 +49,7 @@ def main():
         ("onehot", OneHotEncoder(handle_unknown="ignore"))
     ])
 
-    # === 5. Combine preprocessors ===
+    #Combine preprocessors
     preprocessor = ColumnTransformer(
         transformers=[
             ("num", numeric_transformer, cont_cols),
@@ -58,35 +58,53 @@ def main():
         ]
     )
 
-    # === 6. Define model ===
-    model = Ridge(alpha=1.0, random_state=SEED)
+    #Base model
+    model = Ridge(random_state=SEED)
 
-    # === 7. Build pipeline ===
     pipeline = Pipeline(steps=[
         ("preprocessor", preprocessor),
         ("model", model)
     ])
 
-    # === 8. Optional validation ===
+    #Grid search for hyperparameter tuning
+    param_grid = {
+        "model__alpha": [0.01, 0.1, 1.0, 10.0, 100.0] #notice model__aplha follows sklearn Pipeline syntax
+    }
+
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=SEED)
-    pipeline.fit(X_train, y_train)
-    y_pred_val = pipeline.predict(X_val)
+
+    grid_search = GridSearchCV(
+        pipeline,
+        param_grid=param_grid,
+        scoring="neg_root_mean_squared_error",
+        cv=3,
+        n_jobs=-1
+    )
+
+    grid_search.fit(X_train, y_train)
+
+    print(f"Best alpha: {grid_search.best_params_['model__alpha']}")
+    print(f"Best CV RMSE: {-grid_search.best_score_:.4f}")
+
+    # Evaluate on validation set
+    best_model = grid_search.best_estimator_
+    y_pred_val = best_model.predict(X_val)
     rmse = np.sqrt(mean_squared_error(y_val, y_pred_val))
     print(f"Validation RMSE: {rmse:.4f}")
 
-    # === 9. Retrain on full training data ===
-    pipeline.fit(X, y)
+    #Retrain best model on full dataset
+    best_model.fit(X, y)
 
-    # === 10. Predict on test set ===
-    preds = pipeline.predict(test)
+    #Predict on test set
+    preds = best_model.predict(test)
 
-    # === 11. Save submission ===
+    #Save submission
     submission = pd.DataFrame({
         "index": np.arange(len(preds)),
         "value": preds
     })
     submission.to_csv("submission.csv", index=False)
-    print("submission.csv generated successfully!")
+    print("ubmission.csv generated successfully!")
 
 if __name__ == "__main__":
     main()
