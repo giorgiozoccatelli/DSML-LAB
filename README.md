@@ -13,37 +13,20 @@ The course then provides theoretical and practical knowledge of core data mining
 The repository is organized according to the laboratory sessions:
 
 - **Lab 1 – NumPy Introduction**
-  - text  
-  - solution  
 
 - **Lab 2 – Pandas Introduction**
-  - text  
-  - solution  
 
 - **Lab 3 – Build Your Own Classifier**
-  - text  
-  - Ames Housing Dataset  
-  - solution  
 
-- **Lab 4 – Tree-based Classification**
-  - text  
-  - solution  
+- **Lab 4 – Tree-based Classification** 
 
 - **Lab 5 – Regression Exam Simulation**
-  - text  
-  - Crownlab Folder  
-  - solution  
 
-- **Lab 6 – PyTorch Introduction**
-  - text  
-  - solution  
+- **Lab 6 – PyTorch Introduction** 
 
 - **Lab 7 – Frequent Pattern Mining**
-  - text  
-  - solution  
 
 - **Lab 8 – Clustering**
-  - text  
 
 ## ⚠️ Disclaimer
 
