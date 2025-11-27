@@ -6,7 +6,7 @@ This repository contains personal exercises and solutions developed for the cour
 
 The course focuses on the design and implementation of end-to-end data science workflows to extract knowledge from data and support decision making.  
 Topics include data preprocessing and cleaning, exploratory data analysis, and the implementation of core supervised and unsupervised learning methods such as classification, regression, clustering, association rules, anomaly detection, and introductory deep learning.  
-The course also emphasizes hands-on use of the Python ecosystem, covering **NumPy**, **Pandas**, **Matplotlib**, **scikit-learn** (for classification, regression, and preprocessing), and **PyTorch**, with all phases of a standard data-driven process practiced through lab sessions.
+The course also emphasizes hands-on use of the Python ecosystem, covering **NumPy**, **Pandas**, **Matplotlib**, **scikit-learn**, and **PyTorch**, with all phases of a standard data-driven process practiced through lab sessions.
 
 ## 🗂️ Repository Structure
 
