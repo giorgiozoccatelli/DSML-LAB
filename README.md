@@ -4,9 +4,9 @@ This repository contains personal exercises and solutions developed for the cour
 
 ## 📚 Course Overview
 
-The course focuses on the design and implementation of data-driven processes used to extract knowledge from data and support decision making.  
-It first introduces the complete data science workflow, covering its main phases from problem framing to data preparation, exploration, modeling, and evaluation.  
-The course then provides theoretical and practical knowledge of core data mining and basic machine learning algorithms for analyzing large and heterogeneous datasets, using state-of-the-art Python libraries and a learning-by-doing approach in the lab.
+The course focuses on the design and implementation of end-to-end data science workflows to extract knowledge from data and support decision making.  
+Topics include data preprocessing and cleaning, exploratory data analysis, and the implementation of core supervised and unsupervised learning methods such as classification, regression, clustering, association rules, anomaly detection, and introductory deep learning.  
+The course also emphasizes hands-on use of the Python ecosystem, covering **NumPy**, **Pandas**, **Matplotlib**, **scikit-learn** (for classification, regression, and preprocessing), and **PyTorch**, with all phases of a standard data-driven process practiced through lab sessions.
 
 ## 🗂️ Repository Structure
 
