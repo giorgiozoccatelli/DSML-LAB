@@ -1,4 +1,4 @@
-# 01VSCWS – Data Science and Machine Learning Lab
+# Data Science and Machine Learning Lab
 
 This repository contains personal exercises and solutions developed for the course *01VSCWS – Data Science and Machine Learning Lab* at Politecnico di Torino.
 
