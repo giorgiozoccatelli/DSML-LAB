@@ -28,6 +28,8 @@ The repository is organized according to the laboratory sessions:
 
 - **Lab 8 – Clustering**
 
+- **Lab 9 – Classification Challenge**
+
 ## ⚠️ Disclaimer
 
 These materials are intended for **personal study purposes only** and are **not official course solutions**.
