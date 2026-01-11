@@ -30,6 +30,8 @@ The repository is organized according to the laboratory sessions:
 
 - **Lab 9 – Classification Challenge**
 
+- **Project – Code + Paper** submitted as part of the exam
+
 ## ⚠️ Disclaimer
 
 These materials are intended for **personal study purposes only** and are **not official course solutions**.
